@@ -10,7 +10,6 @@ const Dashboard = () => {
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h1>Welcome to the Diet App Dashboard</h1>
-
       <div style={{ margin: "20px" }}>
         <button
           style={{ fontSize: "24px", padding: "20px", margin: "10px" }}
@@ -19,7 +18,6 @@ const Dashboard = () => {
           Kreator Diety
         </button>
       </div>
-
       <div style={{ margin: "20px" }}>
         <button
           style={{ fontSize: "24px", padding: "20px", margin: "10px" }}
@@ -28,7 +26,6 @@ const Dashboard = () => {
           Przechowywane Diety
         </button>
       </div>
-
       <div style={{ margin: "20px" }}>
         <button
           style={{ fontSize: "24px", padding: "20px", margin: "10px" }}
@@ -37,10 +34,8 @@ const Dashboard = () => {
           Kalendarz
         </button>
       </div>
-
       {/* Przekazujemy funkcję setDiet do CalculatorForm */}
-      <CalculatorForm setDiet={setDiet} />
-
+      <CalculatorForm setDiet={setDiet} /> {/* Kluczowa linia */}
       {/* Jeśli dieta istnieje, wyświetl ją w formie JSON */}
       {diet && (
         <div>

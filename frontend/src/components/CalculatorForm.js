@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/CalculatorForm.css";
+import BackButton from "./BackButton";
 
 const CalculatorForm = ({ setDiet }) => {
   const [formData, setFormData] = useState({
@@ -72,7 +74,6 @@ const CalculatorForm = ({ setDiet }) => {
         dailyCalories -= 500;
         break;
       default:
-        // Poprawka: Dodajemy default, nawet jeśli nie robimy nic
         break;
     }
 
@@ -148,6 +149,8 @@ const CalculatorForm = ({ setDiet }) => {
             break;
           case "obiad":
             baseCalories = calories * 0.3;
+            break;
+          default:
             break;
         }
 
@@ -242,6 +245,7 @@ const CalculatorForm = ({ setDiet }) => {
   const obliczMnoznik = (pierwotnaWartosc, nowaWartosc) =>
     nowaWartosc / pierwotnaWartosc;
 
+  // Funkcja konwertująca składniki na nową wartość po uwzględnieniu mnożnika
   const updateIngredients = (ingredients, mnoznik) => {
     return ingredients
       .split(", ")
@@ -259,8 +263,9 @@ const CalculatorForm = ({ setDiet }) => {
 
   return (
     <div className="container">
+      <BackButton />
       <header>
-        <h1>Kalkulator BMI i Zapotrzebowania Kalorycznego</h1>
+        <h2>Kalkulator BMI i zapotrzebowania kalorycznego</h2>
       </header>
       <main>
         <form id="calculator-form" onSubmit={handleSubmit}>

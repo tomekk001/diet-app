@@ -1,15 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import "../styles/Calendar.css";
+import BackButton from "./BackButton";
 
 const Calendar = () => {
-  const navigate = useNavigate();
   return (
     <div>
-      <h2>Kalendarz Diety</h2>
-      {/* Logika kalendarza */}
-      <button onClick={() => navigate("/dashboard")}>
-        Powrót do Dashboard
-      </button>
+      <BackButton className="back-button-calendar" /> <h2>Kalendarz Diety</h2>
     </div>
   );
 };

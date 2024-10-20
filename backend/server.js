@@ -134,6 +134,7 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 app.get("/api/Dieta/:mealType", async (req, res) => {
   try {
     const mealType = req.params.mealType;
+    console.log(mealType);
 
     // Sprawdzenie, czy mealType jest poprawnym typem posiłku
     if (!collections.includes(mealType)) {

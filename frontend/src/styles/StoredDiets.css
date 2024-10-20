@@ -1,0 +1,30 @@
+/* Stylizacje dla StoredDiets */
+ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    background-color: #fff;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  pre {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    overflow-x: auto;
+  }
+  
+  button {
+    font-size: 16px;
+    margin-top: 20px;
+    padding: 10px;
+  }
+  h2{
+    text-align: center;
+  }

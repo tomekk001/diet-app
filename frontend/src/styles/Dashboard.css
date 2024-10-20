@@ -1,0 +1,29 @@
+/* Stylizacje dla Dashboard */
+.dashboard-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .dashboard-buttons button {
+    font-size: 24px;
+    padding: 20px;
+    margin: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+  }
+  
+  .dashboard-buttons button:hover {
+    background-color: #0056b3;
+  }
+  
+  .dashboard-buttons {
+    margin: 20px;
+  }
+  
+  h1 {
+    font-size: 36px;
+    color: #333;
+  }
+  

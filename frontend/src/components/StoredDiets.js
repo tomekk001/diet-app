@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import "../styles/StoredDiets.css";
+import BackButton from "./BackButton";
 
 const StoredDiets = () => {
-  const navigate = useNavigate(); // Inicjalizacja useNavigate
   const [storedDiets, setStoredDiets] = useState([]);
 
   // Funkcja, która pobiera diety z localStorage
@@ -13,6 +13,7 @@ const StoredDiets = () => {
 
   return (
     <div>
+      <BackButton />
       <h2>Przechowywane Diety</h2>
       {/* Sprawdzanie, czy są jakieś przechowywane diety */}
       {storedDiets.length > 0 ? (
@@ -27,11 +28,6 @@ const StoredDiets = () => {
       ) : (
         <p>Brak zapisanych diet.</p>
       )}
-
-      {/* Przycisk powrotu do Dashboard */}
-      <button onClick={() => navigate("/dashboard")}>
-        Powrót do Dashboard
-      </button>
     </div>
   );
 };
