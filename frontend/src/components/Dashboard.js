@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CalculatorForm from "./CalculatorForm"; // Zakładam, że ten plik istnieje
-import StoredDiets from "./StoredDiets"; // Zakładam, że ten plik istnieje
 
 const Dashboard = () => {
-  const [diet, setDiet] = useState(null); // Stan dla diety
   const navigate = useNavigate();
 
   return (
@@ -34,15 +31,6 @@ const Dashboard = () => {
           Kalendarz
         </button>
       </div>
-      {/* Przekazujemy funkcję setDiet do CalculatorForm */}
-      <CalculatorForm setDiet={setDiet} /> {/* Kluczowa linia */}
-      {/* Jeśli dieta istnieje, wyświetl ją w formie JSON */}
-      {diet && (
-        <div>
-          <h2>Twoja wygenerowana dieta:</h2>
-          <pre>{JSON.stringify(diet, null, 2)}</pre>
-        </div>
-      )}
     </div>
   );
 };
