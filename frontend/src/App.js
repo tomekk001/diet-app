@@ -12,6 +12,7 @@ import StoredDiets from "./components/StoredDiets";
 import Calendar from "./components/Calendar";
 import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
+import Test from "./components/Test";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/calculator" element={<CalculatorDiet />} />
         <Route path="/stored-diets" element={<StoredDiets />} />
         <Route path="/calendar" element={<Calendar />} />
+        <Route path="/test" element={<Test />} />
       </Routes>
     </Router>
   );

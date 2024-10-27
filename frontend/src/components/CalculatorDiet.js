@@ -1,5 +1,3 @@
-// CalculatorDiet.js
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/CalculatorForm.css";
@@ -8,128 +6,14 @@ import CalculatorBMI from "./CalculatorBMI";
 
 const CalculatorDiet = () => {
   const [results, setResults] = useState(null);
+  const [dietPlan, setDietPlan] = useState(null); // Przechowuje plan diety
   const navigate = useNavigate();
 
   const handleCalculate = (calculatedResults) => {
     setResults(calculatedResults);
   };
 
-  // Funkcja generująca dietę na cały miesiąc
-  const generateMonthlyDiet = async (
-    calories,
-    protein,
-    carbohydrates,
-    fats
-  ) => {
-    const daysOfMonth = Array.from({ length: 30 }, (_, i) => `Dzień ${i + 1}`);
-    const mealTypes = [
-      "sniadanie",
-      "iisniadanie",
-      "obiad",
-      "podwieczorek",
-      "kolacja",
-    ];
-
-    const mealsData = await getMealsData();
-    const monthlyDiet = [];
-
-    for (const day of daysOfMonth) {
-      const dailyMeals = {
-        day,
-        meals: [],
-        dailyCalories: 0,
-        dailyProtein: 0,
-        dailyCarbs: 0,
-        dailyFats: 0,
-      };
-
-      for (const mealType of mealTypes) {
-        let baseCalories;
-        switch (mealType) {
-          case "sniadanie":
-            baseCalories = calories * 0.25;
-            break;
-          case "kolacja":
-            baseCalories = calories * 0.2;
-            break;
-          case "iisniadanie":
-            baseCalories = calories * 0.15;
-            break;
-          case "podwieczorek":
-            baseCalories = calories * 0.1;
-            break;
-          case "obiad":
-            baseCalories = calories * 0.3;
-            break;
-          default:
-            break;
-        }
-
-        let mealCalories = baseCalories + losujBlad();
-
-        let selectedMeal = null;
-        let minDifference = Number.MAX_VALUE;
-
-        if (Array.isArray(mealsData[mealType])) {
-          for (const meal of mealsData[mealType]) {
-            const mnoznik = obliczMnoznik(meal.kaloryczność, mealCalories);
-            const tempBialko = meal.białko * mnoznik;
-            const tempWege = meal.węglowodany * mnoznik;
-            const tempTluszcze = meal.tłuszcze * mnoznik;
-
-            const remainingProtein = protein - dailyMeals.dailyProtein;
-            const remainingCarbs = carbohydrates - dailyMeals.dailyCarbs;
-            const remainingFats = fats - dailyMeals.dailyFats;
-
-            const difference =
-              Math.abs(tempBialko - remainingProtein) +
-              Math.abs(tempWege - remainingCarbs) +
-              Math.abs(tempTluszcze - remainingFats);
-
-            if (difference < minDifference) {
-              minDifference = difference;
-              selectedMeal = {
-                ...meal,
-                kaloryczność: mealCalories,
-                białko: tempBialko,
-                węglowodany: tempWege,
-                tłuszcze: tempTluszcze,
-                składniki: updateIngredients(meal.składniki, mnoznik),
-              };
-            }
-          }
-        }
-
-        if (selectedMeal) {
-          dailyMeals.meals.push(selectedMeal);
-          dailyMeals.dailyCalories += selectedMeal.kaloryczność;
-          dailyMeals.dailyProtein += selectedMeal.białko;
-          dailyMeals.dailyCarbs += selectedMeal.węglowodany;
-          dailyMeals.dailyFats += selectedMeal.tłuszcze;
-        }
-      }
-
-      monthlyDiet.push(dailyMeals);
-    }
-
-    return monthlyDiet;
-  };
-
-  const handleGenerateDiet = () => {
-    const { calories, protein, carbohydrates, fats } = results;
-
-    generateMonthlyDiet(calories, protein, carbohydrates, fats).then(
-      (dietData) => {
-        const previousDiets = JSON.parse(localStorage.getItem("diets")) || [];
-        localStorage.setItem(
-          "diets",
-          JSON.stringify([...previousDiets, dietData])
-        );
-        navigate("/stored-diets");
-      }
-    );
-  };
-
+  // Pobranie danych o posiłkach z serwera
   const getMealsData = async () => {
     const mealTypes = [
       "sniadanie",
@@ -140,29 +24,140 @@ const CalculatorDiet = () => {
     ];
     const mealsData = {};
     for (const mealType of mealTypes) {
-      const response = await fetch(`/api/Dieta/${mealType}`);
+      const response = await fetch("http://localhost:5000/api/Dieta/sniadanie");
       const data = await response.json();
       mealsData[mealType] = data;
     }
     return mealsData;
   };
 
+  // Generowanie diety na tydzień
+  const generateWeeklyDiet = async () => {
+    const daysOfWeek = [
+      "Poniedziałek",
+      "Wtorek",
+      "Środa",
+      "Czwartek",
+      "Piątek",
+      "Sobota",
+      "Niedziela",
+    ];
+    const mealsData = await getMealsData();
+    const weeklyDiet = daysOfWeek.map((day) =>
+      createDailyDiet(day, mealsData, results)
+    );
+    setDietPlan(weeklyDiet);
+  };
+
+  // Generowanie diety na miesiąc
+  const generateMonthlyDiet = async () => {
+    const daysOfMonth = Array.from({ length: 30 }, (_, i) => `Dzień ${i + 1}`);
+    const mealsData = await getMealsData();
+    const monthlyDiet = daysOfMonth.map((day) =>
+      createDailyDiet(day, mealsData, results)
+    );
+    setDietPlan(monthlyDiet);
+    navigate("/stored-diets");
+  };
+
+  // Funkcja tworząca dzienny plan diety na podstawie wyników i danych o posiłkach
+  const createDailyDiet = (
+    day,
+    mealsData,
+    { calories, protein, carbohydrates, fats }
+  ) => {
+    const mealTypes = [
+      "sniadanie",
+      "iisniadanie",
+      "obiad",
+      "podwieczorek",
+      "kolacja",
+    ];
+    const dailyMeals = [];
+    let dailyCalories = 0,
+      dailyProtein = 0,
+      dailyCarbs = 0,
+      dailyFats = 0;
+
+    mealTypes.forEach((mealType) => {
+      const mealCalories = calculateMealCalories(calories, mealType);
+      const selectedMeal = findClosestMeal(
+        mealsData[mealType],
+        mealCalories,
+        protein,
+        carbohydrates,
+        fats
+      );
+      if (selectedMeal) {
+        dailyMeals.push(selectedMeal);
+        dailyCalories += selectedMeal.kaloryczność;
+        dailyProtein += selectedMeal.białko;
+        dailyCarbs += selectedMeal.węglowodany;
+        dailyFats += selectedMeal.tłuszcze;
+      }
+    });
+
+    return {
+      day,
+      meals: dailyMeals,
+      dailyCalories,
+      dailyProtein,
+      dailyCarbs,
+      dailyFats,
+    };
+  };
+
+  // Wyliczanie kalorii dla posiłku na podstawie typu posiłku
+  const calculateMealCalories = (calories, mealType) => {
+    switch (mealType) {
+      case "sniadanie":
+        return calories * 0.25 + losujBlad();
+      case "iisniadanie":
+        return calories * 0.15 + losujBlad();
+      case "obiad":
+        return calories * 0.3 + losujBlad();
+      case "podwieczorek":
+        return calories * 0.1 + losujBlad();
+      case "kolacja":
+        return calories * 0.2 + losujBlad();
+      default:
+        return 0;
+    }
+  };
+
+  // Wybór najbliższego pasującego posiłku
+  const findClosestMeal = (meals, targetCalories, protein, carbs, fats) => {
+    let closestMeal = null;
+    let minDifference = Number.MAX_VALUE;
+
+    meals.forEach((meal) => {
+      const mnoznik = obliczMnoznik(meal.kaloryczność, targetCalories);
+      const tempBialko = meal.białko * mnoznik;
+      const tempWege = meal.węglowodany * mnoznik;
+      const tempTluszcze = meal.tłuszcze * mnoznik;
+
+      const difference =
+        Math.abs(tempBialko - protein) +
+        Math.abs(tempWege - carbs) +
+        Math.abs(tempTluszcze - fats);
+      if (difference < minDifference) {
+        minDifference = difference;
+        closestMeal = {
+          ...meal,
+          kaloryczność: targetCalories,
+          białko: tempBialko,
+          węglowodany: tempWege,
+          tłuszcze: tempTluszcze,
+        };
+      }
+    });
+
+    return closestMeal;
+  };
+
   const losujBlad = () => Math.random() * 40 - 20;
   const obliczMnoznik = (pierwotnaWartosc, nowaWartosc) =>
     nowaWartosc / pierwotnaWartosc;
-
-  const updateIngredients = (ingredients, mnoznik) =>
-    ingredients
-      .split(", ")
-      .map((ingredient) => {
-        const match = ingredient.match(/^(\d+(\.\d+)?)\s*(.+)$/);
-        if (match) {
-          const newAmount = (parseFloat(match[1]) * mnoznik).toFixed(1);
-          return `${newAmount} ${match[3]}`;
-        }
-        return ingredient;
-      })
-      .join(", ");
 
   return (
     <div className="container">
@@ -183,10 +178,35 @@ const CalculatorDiet = () => {
               Makroskładniki: Białko - {results.protein} g, Węglowodany -{" "}
               {results.carbohydrates} g, Tłuszcze - {results.fats} g
             </p>
-            <button id="generate-diet-btn" onClick={handleGenerateDiet}>
+            <button onClick={generateWeeklyDiet}>
+              Wygeneruj dietę na tydzień
+            </button>
+            <button onClick={generateMonthlyDiet}>
               Wygeneruj dietę na miesiąc
             </button>
           </section>
+        )}
+        {dietPlan && (
+          <div>
+            <h2>Dieta:</h2>
+            {dietPlan.map((dayPlan, index) => (
+              <div key={index}>
+                <h3>{dayPlan.day}</h3>
+                {dayPlan.meals.map((meal, i) => (
+                  <div key={i}>
+                    <h4>{meal.nazwa}</h4>
+                    <p>{meal.kaloryczność} kcal</p>
+                    <p>Składniki: {meal.składniki}</p>
+                  </div>
+                ))}
+                <p>Kalorie: {dayPlan.dailyCalories} kcal</p>
+                <p>
+                  Białko: {dayPlan.dailyProtein} g, Węglowodany:{" "}
+                  {dayPlan.dailyCarbs} g, Tłuszcze: {dayPlan.dailyFats} g
+                </p>
+              </div>
+            ))}
+          </div>
         )}
       </main>
       <footer>
