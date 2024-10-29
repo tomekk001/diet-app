@@ -1,20 +1,51 @@
-/* Stylizacje dla Calendar */
 .calendar-container {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  button {
-    background-color: #17a2b8;
-    color: white;
-    padding: 15px 30px;
-    font-size: 18px;
-    border-radius: 5px;
-    border: none;
-    margin-top: 20px;
-  }
-  
-  button:hover {
-    background-color: #138496;
-  }
-  
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4; /* Jasne tło */
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.calendar-grid button {
+  padding: 15px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007bff; /* Kolor tła przycisku */
+  color: white; /* Kolor tekstu */
+  border: none; /* Brak ramki */
+  border-radius: 5px; /* Zaokrąglone rogi */
+  transition: background-color 0.3s; /* Animacja przycisku */
+}
+
+.calendar-grid button:hover {
+  background-color: #0056b3; /* Ciemniejszy odcień przycisku po najechaniu */
+}
+
+.meals-display {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #fff; /* Białe tło dla wyświetlania posiłków */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Cień dla lepszego efektu wizualnego */
+}
+
+.meal-item {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.meal-item h4 {
+  margin: 0;
+  color: #333;
+}
+
+.meal-item p {
+  margin: 5px 0; /* Odstępy między akapitami */
+}

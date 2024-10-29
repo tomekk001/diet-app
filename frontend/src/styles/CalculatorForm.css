@@ -52,6 +52,7 @@ header h1 {
 .form-group select:focus {
   border-color: #66afe9;
   outline: none;
+  cursor: pointer;
 }
 
 /* Stylizacja przycisku oblicz */
@@ -71,8 +72,10 @@ button#calculate-btn {
 button#calculate-btn:hover {
   background-color: #218838;
 }
+#btnDietCalc {
+  cursor: pointer;
+}
 
-/* Wyniki */
 section.results {
   margin-top: 30px;
   text-align: center;
