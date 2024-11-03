@@ -9,7 +9,12 @@ const Dashboard = () => {
       <h1>Welcome to the Diet App Dashboard</h1>
       <div style={{ margin: "20px" }}>
         <button
-          style={{ fontSize: "24px", padding: "20px", margin: "10px" }}
+          style={{
+            fontSize: "24px",
+            padding: "20px",
+            margin: "10px",
+            cursor: "pointer",
+          }}
           onClick={() => navigate("/calculator")}
         >
           Kreator Diety
@@ -17,7 +22,12 @@ const Dashboard = () => {
       </div>
       <div style={{ margin: "20px" }}>
         <button
-          style={{ fontSize: "24px", padding: "20px", margin: "10px" }}
+          style={{
+            fontSize: "24px",
+            padding: "20px",
+            margin: "10px",
+            cursor: "pointer",
+          }}
           onClick={() => navigate("/stored-diets")}
         >
           Przechowywane Diety
@@ -25,7 +35,12 @@ const Dashboard = () => {
       </div>
       <div style={{ margin: "20px" }}>
         <button
-          style={{ fontSize: "24px", padding: "20px", margin: "10px" }}
+          style={{
+            fontSize: "24px",
+            padding: "20px",
+            margin: "10px",
+            cursor: "pointer",
+          }}
           onClick={() => navigate("/calendar")}
         >
           Kalendarz

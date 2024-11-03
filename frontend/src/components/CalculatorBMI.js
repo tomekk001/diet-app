@@ -1,6 +1,5 @@
-// CalculatorBMI.js
-
 import React, { useState } from "react";
+import "../styles/CalculatorBMI.css";
 
 const CalculatorBMI = ({ onCalculate }) => {
   const [formData, setFormData] = useState({
@@ -11,10 +10,12 @@ const CalculatorBMI = ({ onCalculate }) => {
     activity: "1.2",
     goal: "maintain",
   });
+  const [errors, setErrors] = useState({}); // Stan przechowujący błędy
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: "" }); // Usuwanie błędów przy zmianie
   };
 
   const handleSubmit = (e) => {
@@ -25,13 +26,27 @@ const CalculatorBMI = ({ onCalculate }) => {
     const ageInt = parseInt(age);
     const activityFloat = parseFloat(activity);
 
-    if (
-      isNaN(weightFloat) ||
-      isNaN(heightFloat) ||
-      isNaN(ageInt) ||
-      isNaN(activityFloat)
-    )
+    // Walidacja danych wejściowych
+    const newErrors = {};
+    if (isNaN(weightFloat) || weightFloat <= 0) {
+      newErrors.weight = "Waga musi być dodatnią liczbą.";
+    }
+    if (weightFloat >= 250) {
+      newErrors.weight = "Nieprawidłowa waga.";
+    }
+    if (isNaN(heightFloat) || heightFloat <= 0) {
+      newErrors.height = "Wzrost musi być dodatnią liczbą.";
+    }
+    if (heightFloat >= 300) {
+      newErrors.height = "Nieprawidłowy wzrost.";
+    }
+    if (isNaN(ageInt) || ageInt <= 0 || ageInt >= 150) {
+      newErrors.age = "Nieprawidłowy wiek.";
+    }
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
+    }
 
     const heightInMeters = heightFloat / 100;
     const bmi = weightFloat / (heightInMeters * heightInMeters);
@@ -83,6 +98,7 @@ const CalculatorBMI = ({ onCalculate }) => {
           onChange={handleChange}
           required
         />
+        {errors.weight && <p className="error">{errors.weight}</p>}
       </div>
       <div className="form-group">
         <label htmlFor="height">Wzrost (cm):</label>
@@ -94,6 +110,7 @@ const CalculatorBMI = ({ onCalculate }) => {
           onChange={handleChange}
           required
         />
+        {errors.height && <p className="error">{errors.height}</p>}
       </div>
       <div className="form-group">
         <label htmlFor="age">Wiek:</label>
@@ -105,6 +122,7 @@ const CalculatorBMI = ({ onCalculate }) => {
           onChange={handleChange}
           required
         />
+        {errors.age && <p className="error">{errors.age}</p>}
       </div>
       <div className="form-group">
         <label htmlFor="activity">Aktywność fizyczna:</label>

@@ -45,7 +45,10 @@ const StoredDiets = () => {
         <BackButton />
       </div>
       <h2 className="macrosName">Makroskładniki:</h2>
-      <p>Dzienne zapotrzebowanie kaloryczne: {storedMacros.calories} kcal</p>
+      <p>
+        Dzienne zapotrzebowanie kaloryczne: {Math.ceil(storedMacros.calories)}{" "}
+        kcal
+      </p>
       <p>Białko: {storedMacros.protein} g</p>
       <p>Węglowodany: {storedMacros.carbohydrates} g</p>
       <p>Tłuszcze: {storedMacros.fats} g</p>

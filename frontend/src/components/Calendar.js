@@ -4,7 +4,8 @@ import BackButton from "./BackButton";
 
 const Calendar = () => {
   const [selectedDay, setSelectedDay] = useState(null);
-  const [meals, setMeals] = useState([]);
+  const [dietPlan, setDietPlan] = useState([]); // Stan przechowujący cały dietPlan
+  const [meals, setMeals] = useState([]); // Stan przechowujący posiłki wybranego dnia
   const [macros, setMacros] = useState({
     calories: 0,
     protein: 0,
@@ -20,29 +21,35 @@ const Calendar = () => {
   ]);
 
   useEffect(() => {
-    const savedDietPlan = JSON.parse(localStorage.getItem("dietPlan")) || {};
+    // Wczytujemy dietPlan i makroskładniki tylko raz, po załadowaniu komponentu
+    const savedDietPlan = JSON.parse(localStorage.getItem("dietPlan")) || [];
     const savedMacros = JSON.parse(localStorage.getItem("macros")) || {};
 
+    setDietPlan(savedDietPlan); // Ustawiamy cały plan diety
     if (savedMacros) {
-      setMacros(savedMacros);
+      setMacros(savedMacros); // Ustawiamy makroskładniki
     }
+  }, []);
 
-    if (selectedDay !== null && savedDietPlan[selectedDay]) {
-      setMeals(savedDietPlan[selectedDay].meals);
+  useEffect(() => {
+    // Ustawiamy posiłki na podstawie wybranego dnia
+    if (selectedDay !== null && dietPlan[selectedDay]) {
+      setMeals(dietPlan[selectedDay].meals);
     }
-  }, [selectedDay]);
+  }, [selectedDay, dietPlan]); // DietPlan nie zmienia się po początkowym wczytaniu
 
   const handleDayClick = (day) => {
-    setSelectedDay(day);
+    // Ustawienie `selectedDay` jako indeks tablicy (od 0)
+    setSelectedDay(day - 1);
   };
 
   const calculateDailyMacros = () => {
     return meals.reduce(
       (acc, meal) => {
-        acc.calories += Math.ceil(meal.kaloryczność); // Zaokrąglenie kalorii
-        acc.protein += Math.ceil(meal.białko); // Zaokrąglenie białka
-        acc.carbs += Math.ceil(meal.węglowodany); // Zaokrąglenie węglowodanów
-        acc.fats += Math.ceil(meal.tłuszcze); // Zaokrąglenie tłuszczy
+        acc.calories += Math.ceil(meal.kaloryczność);
+        acc.protein += Math.ceil(meal.białko);
+        acc.carbs += Math.ceil(meal.węglowodany);
+        acc.fats += Math.ceil(meal.tłuszcze);
         return acc;
       },
       { calories: 0, protein: 0, carbs: 0, fats: 0 }
@@ -62,9 +69,9 @@ const Calendar = () => {
           </button>
         ))}
       </div>
-      {selectedDay && (
+      {selectedDay !== null && (
         <div className="meals-display">
-          <h3>Posiłki na dzień {selectedDay}:</h3>
+          <h3>Posiłki na dzień {selectedDay + 1}:</h3>
           {meals.length ? (
             meals.map((meal, index) => (
               <div key={index} className="meal-item">

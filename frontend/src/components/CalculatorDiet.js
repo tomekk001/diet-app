@@ -38,15 +38,6 @@ const CalculatorDiet = () => {
     const monthlyDiet = daysOfMonth.map((day, index) =>
       createDailyDiet(day, mealsData, results, lastWeekMeals, index)
     );
-    daysOfMonth.forEach((day, index) => {
-      monthlyDiet[index + 1] = createDailyDiet(
-        day,
-        mealsData,
-        results,
-        lastWeekMeals,
-        index
-      );
-    });
 
     // Przechowywanie w local storage
     localStorage.setItem("dietPlan", JSON.stringify(monthlyDiet));
