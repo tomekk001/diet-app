@@ -1,29 +1,60 @@
-/* Stylizacje dla Dashboard */
+/* Dashboard.css */
+
 .dashboard-container {
-    text-align: center;
-    margin-top: 50px;
-  }
-  
-  .dashboard-buttons button {
-    font-size: 24px;
-    padding: 20px;
-    margin: 10px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    color: white;
-  }
-  
-  .dashboard-buttons button:hover {
-    background-color: #0056b3;
-  }
-  
-  .dashboard-buttons {
-    margin: 20px;
-  }
-  
-  h1 {
-    font-size: 36px;
-    color: #333;
-  }
-  
+  text-align: center;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.dashboard-title {
+  font-size: 36px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.dashboard-description {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.dashboard-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dashboard-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-icon {
+  font-size: 48px;
+  color: #007bff;
+  margin-bottom: 15px;
+}
+
+.card-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.card-description {
+  font-size: 16px;
+  color: #555;
+}
