@@ -1,3 +1,4 @@
+// src/components/Dashboard.js
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Dashboard.css";
@@ -6,9 +7,19 @@ import { FaCalculator, FaClipboardList, FaCalendarAlt } from "react-icons/fa";
 const Dashboard = () => {
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Usuń token z localStorage
+    navigate("/login"); // Przekieruj na stronę logowania
+  };
+
   return (
     <div className="dashboard-container">
-      <h1 className="dashboard-title">Witamy w panelu generatora diety</h1>
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">Witamy w panelu generatora diety</h1>
+        <button className="logout-button" onClick={handleLogout}>
+          Wyloguj się
+        </button>
+      </div>
       <p className="dashboard-description">
         Zarządzaj swoją dietą, śledź posiłki i bądź na bieżąco ze swoimi celami
         żywieniowymi.

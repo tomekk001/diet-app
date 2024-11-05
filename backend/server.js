@@ -88,6 +88,11 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+// Dodaj funkcję zabezpieczającą w backendzie w swoim pliku API
+app.get("/api/dashboard", authenticateToken, (req, res) => {
+  res.json({ message: "Witamy w panelu głównym", user: req.user });
+});
+
 // Middleware do weryfikacji tokenu JWT
 const authenticateToken = (req, res, next) => {
   const token = req.header("Authorization");

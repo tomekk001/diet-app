@@ -1,3 +1,4 @@
+// src/App.js
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -13,6 +14,7 @@ import Calendar from "./components/Calendar";
 import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
 import Test from "./components/Test";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -22,11 +24,48 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/calculator" element={<CalculatorDiet />} />
-        <Route path="/stored-diets" element={<StoredDiets />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/test" element={<Test />} />
+
+        {/* Trasy chronione przez ProtectedRoute */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/calculator"
+          element={
+            <ProtectedRoute>
+              <CalculatorDiet />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/stored-diets"
+          element={
+            <ProtectedRoute>
+              <StoredDiets />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/calendar"
+          element={
+            <ProtectedRoute>
+              <Calendar />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/test"
+          element={
+            <ProtectedRoute>
+              <Test />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );
