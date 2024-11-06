@@ -24,7 +24,7 @@ const port = process.env.PORT || 5000;
 
 // Połączenie z MongoDB przy użyciu natywnego klienta
 let db; // Utworzenie zmiennej do przechowywania połączenia z bazą danych
-MongoClient.connect(mongoURI, { useUnifiedTopology: true })
+MongoClient.connect(mongoURI)
   .then((client) => {
     db = client.db("Dieta"); // Połącz się z bazą danych "Dieta"
     console.log("Połączono z MongoDB");
@@ -88,11 +88,6 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-// Dodaj funkcję zabezpieczającą w backendzie w swoim pliku API
-app.get("/api/dashboard", authenticateToken, (req, res) => {
-  res.json({ message: "Witamy w panelu głównym", user: req.user });
-});
-
 // Middleware do weryfikacji tokenu JWT
 const authenticateToken = (req, res, next) => {
   const token = req.header("Authorization");
@@ -106,6 +101,11 @@ const authenticateToken = (req, res, next) => {
     res.status(400).json({ message: "Nieprawidłowy token" });
   }
 };
+
+// Dodaj funkcję zabezpieczającą w backendzie w swoim pliku API
+app.get("/api/dashboard", authenticateToken, (req, res) => {
+  res.json({ message: "Witamy w panelu głównym", user: req.user });
+});
 
 // API zabezpieczone JWT - przykład
 app.get("/api/secure-data", authenticateToken, (req, res) => {
