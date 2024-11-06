@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import "../styles/Register.css";
 
 const Register = () => {
@@ -8,7 +8,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate(); // Inicjalizacja useNavigate
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,8 +20,7 @@ const Register = () => {
         password,
       });
       setMessage(response.data.message);
-
-      // Przekierowanie do logowania po udanej rejestracji
+      //przekieruj jezeli udalo sie zalogowaac
       navigate("/login");
     } catch (error) {
       console.error("Error during registration:", error);
@@ -32,7 +31,7 @@ const Register = () => {
   return (
     <div>
       <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
+      <form className="formFirst" onSubmit={handleSubmit}>
         <input
           type="text"
           value={username}

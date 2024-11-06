@@ -6,15 +6,17 @@ const Home = () => {
   return (
     <div>
       <header>
-        <h1>Welcome to the Diet app</h1>
-        <p>This is the home page</p>
+        <h1>Generator diety</h1>
+        <p>Strona główna</p>
       </header>
-      <Link to="/login">
-        <button>Zaloguj się</button>
-      </Link>
-      <Link to="/register">
-        <button>Zarejestruj się</button>
-      </Link>
+      <div className="containerHome">
+        <Link to="/login">
+          <button>Zaloguj się</button>
+        </Link>
+        <Link to="/register">
+          <button>Zarejestruj się</button>
+        </Link>
+      </div>
     </div>
   );
 };

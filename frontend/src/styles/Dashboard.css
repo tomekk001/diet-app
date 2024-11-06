@@ -6,10 +6,38 @@
   background-color: #f8f9fa;
 }
 
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Wyśrodkuj zawartość */
+  position: relative;
+  margin-bottom: 20px;
+}
+
 .dashboard-title {
   font-size: 36px;
   color: #333;
-  margin-bottom: 10px;
+  margin: 0;
+  flex: 1; /* Zapewnij, że tytuł zajmuje resztę dostępnej przestrzeni */
+  text-align: center;
+}
+
+.logout-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #007bff;
+  width: 150px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: absolute;
+  right: 0; /* Ustawienie przycisku po prawej stronie */
+}
+
+.logout-button:hover {
+  background-color: #0056b3;
 }
 
 .dashboard-description {
