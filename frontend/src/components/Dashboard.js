@@ -1,4 +1,3 @@
-// src/components/Dashboard.js
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Dashboard.css";
@@ -8,8 +7,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Usuń token z localStorage
-    navigate("/login"); // Przekieruj na stronę logowania
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   return (

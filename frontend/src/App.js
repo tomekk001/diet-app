@@ -9,11 +9,10 @@ import {
 import Register from "./components/Register";
 import Login from "./components/Login";
 import CalculatorDiet from "./components/CalculatorDiet";
-import StoredDiets from "./components/StoredDiets";
+import StoredDiet from "./components/StoredDiets";
 import Calendar from "./components/Calendar";
 import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
-import Test from "./components/Test";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -46,7 +45,7 @@ function App() {
           path="/stored-diets"
           element={
             <ProtectedRoute>
-              <StoredDiets />
+              <StoredDiet />
             </ProtectedRoute>
           }
         />
@@ -55,14 +54,6 @@ function App() {
           element={
             <ProtectedRoute>
               <Calendar />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/test"
-          element={
-            <ProtectedRoute>
-              <Test />
             </ProtectedRoute>
           }
         />

@@ -3,11 +3,11 @@ import { useLocation } from "react-router-dom";
 import "../styles/StoredDiets.css";
 import BackButton from "./BackButton";
 
-const StoredDiets = () => {
+const StoredDiet = () => {
   const location = useLocation();
-  const { dietPlan, macros } = location.state || {}; // Odbieramy dietPlan i makroskładniki
+  const { dietPlan, macros } = location.state || {}; //odbieranie dietplan i marko
 
-  // Użyj useState do przechowywania danych
+  //przechowywanie danych
   const [storedDietPlan, setStoredDietPlan] = useState(dietPlan);
   const [storedMacros, setStoredMacros] = useState(macros);
   const [meals] = useState([
@@ -81,4 +81,4 @@ const StoredDiets = () => {
   );
 };
 
-export default StoredDiets;
+export default StoredDiet;

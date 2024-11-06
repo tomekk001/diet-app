@@ -35,7 +35,7 @@ const CalculatorDiet = () => {
   const generateMonthlyDiet = async () => {
     const daysOfMonth = Array.from({ length: 30 }, (_, i) => `Dzień ${i + 1}`);
     const mealsData = await getMealsData();
-    const usedMeals = new Set(); // Zbiór przechowujący posiłki użyte w całym miesiącu
+    const usedMeals = new Set(); //zbior przechowujacy posilki uzyte w calym miesiacu
 
     const monthlyDiet = daysOfMonth.map((day) =>
       createDailyDiet(day, mealsData, results, usedMeals)
@@ -66,7 +66,7 @@ const CalculatorDiet = () => {
       dailyCarbs = 0,
       dailyFats = 0;
 
-    const usedMealsPerDay = new Set(); // Posiłki wykorzystane dla danego dnia
+    const usedMealsPerDay = new Set(); //posilki wykorzystane dla danego dnia
 
     mealTypes.forEach((mealType) => {
       const mealCalories = Math.ceil(calculateMealCalories(calories, mealType));
@@ -184,7 +184,7 @@ const CalculatorDiet = () => {
     return bestMeal;
   };
 
-  // Funkcja oceny różnicy w makroskładnikach
+  //funkcja oceny roznicy w makroskladnikach
   const calculateTotalDifference = (
     targetProtein,
     targetCarbs,
@@ -194,7 +194,7 @@ const CalculatorDiet = () => {
     actualFats
   ) => {
     return (
-      Math.abs(targetProtein - actualProtein) * 2 + // Podwójna waga dla białka
+      Math.abs(targetProtein - actualProtein) * 2 +
       Math.abs(targetCarbs - actualCarbs) +
       Math.abs(targetFats - actualFats)
     );
@@ -205,7 +205,7 @@ const CalculatorDiet = () => {
     nowaWartosc / pierwotnaWartosc;
 
   return (
-    <div className="container">
+    <div className="containerCalculator">
       <BackButton />
       <header>
         <h2>Kalkulator BMI i zapotrzebowania kalorycznego</h2>

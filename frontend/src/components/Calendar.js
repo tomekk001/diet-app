@@ -4,8 +4,8 @@ import BackButton from "./BackButton";
 
 const Calendar = () => {
   const [selectedDay, setSelectedDay] = useState(null);
-  const [dietPlan, setDietPlan] = useState([]); // Stan przechowujący cały dietPlan
-  const [meals, setMeals] = useState([]); // Stan przechowujący posiłki wybranego dnia
+  const [dietPlan, setDietPlan] = useState([]); //stan przechowujacy caly dietPlan
+  const [meals, setMeals] = useState([]);
   const [macros, setMacros] = useState({
     calories: 0,
     protein: 0,
@@ -21,25 +21,24 @@ const Calendar = () => {
   ]);
 
   useEffect(() => {
-    // Wczytujemy dietPlan i makroskładniki tylko raz, po załadowaniu komponentu
+    //wczytanie dietPlan i makro
     const savedDietPlan = JSON.parse(localStorage.getItem("dietPlan")) || [];
     const savedMacros = JSON.parse(localStorage.getItem("macros")) || {};
 
-    setDietPlan(savedDietPlan); // Ustawiamy cały plan diety
+    setDietPlan(savedDietPlan); //ustawianie planu diety
     if (savedMacros) {
-      setMacros(savedMacros); // Ustawiamy makroskładniki
+      setMacros(savedMacros);
     }
   }, []);
 
   useEffect(() => {
-    // Ustawiamy posiłki na podstawie wybranego dnia
+    //ustawianie posiłkow na podstawie wybranego dnia
     if (selectedDay !== null && dietPlan[selectedDay]) {
       setMeals(dietPlan[selectedDay].meals);
     }
-  }, [selectedDay, dietPlan]); // DietPlan nie zmienia się po początkowym wczytaniu
+  }, [selectedDay, dietPlan]);
 
   const handleDayClick = (day) => {
-    // Ustawienie `selectedDay` jako indeks tablicy (od 0)
     setSelectedDay(day - 1);
   };
 
@@ -75,7 +74,7 @@ const Calendar = () => {
           {meals.length ? (
             meals.map((meal, index) => (
               <div key={index} className="meal-item">
-                <h4>{mealsName[index]}</h4> {/* Wyświetlanie nazwy posiłku */}
+                <h4>{mealsName[index]}</h4>
                 <p>{meal.nazwa}</p>
                 <p>Kalorie: {Math.ceil(meal.kaloryczność)} kcal</p>
                 <p>Białko: {Math.ceil(meal.białko)} g</p>
