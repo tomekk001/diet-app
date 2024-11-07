@@ -6,10 +6,10 @@ const Home = () => {
   return (
     <div>
       <header>
-        <h1>Generator diety</h1>
+        <h1>Genrator diety</h1>
         <p>Strona główna</p>
       </header>
-      <div className="containerHome">
+      <div className="btnHome">
         <Link to="/login">
           <button>Zaloguj się</button>
         </Link>

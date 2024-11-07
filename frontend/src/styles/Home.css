@@ -10,25 +10,23 @@ h1 {
 
 p {
   font-size: 18px;
-  color: black;
+  color: #555;
 }
 
-.containerHome {
+.btnHome {
   display: flex;
-  justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding: 20px; /* Zmniejsza przestrzeń wokół kontenera */
-  max-width: 400px; /* Ogranicza szerokość kontenera */
-  margin: 0 auto; /* Wyrównanie kontenera do środka */
+  justify-content: center;
+  margin-top: 20px;
 }
 
 button {
-  margin: 5px; /* Zmniejszenie marginesu wokół przycisków */
+  margin: 10px;
   padding: 10px 20px;
   font-size: 18px;
-  width: 200px; /* Automatyczna szerokość przycisków w kontenerze */
-  max-width: 350px; /* Ograniczenie maksymalnej szerokości przycisków */
+  width: 200px;
+  text-align: center;
   cursor: pointer;
 }
 

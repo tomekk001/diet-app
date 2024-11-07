@@ -1,42 +1,33 @@
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-.formFirst {
-  max-width: 360px;
-  margin: 30px auto;
+form {
+  max-width: 200px;
+  margin: 50px auto;
   background-color: #fff;
-  width: 100%;
-  padding: 15px;
+  padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Wyśrodkowanie elementów w formularzu */
 }
 
-.loginInput {
+input {
   width: 95%;
-  padding: 8px;
-  margin: 8px 0;
+  padding: 10px;
+  margin: 10px 0;
   border-radius: 5px;
   border: 1px solid #ddd;
 }
 
 button {
-  width: auto; /* Ustawienie szerokości przycisku na automatyczną */
-  padding: 8px 20px; /* Dostosowanie paddingu przycisku */
+  width: 100%;
+  padding: 10px;
   background-color: #28a745;
   color: white;
   border-radius: 5px;
   border: none;
-  margin-top: 10px; /* Dodanie odstępu między przyciskami a polami */
-  align-self: center; /* Wyśrodkowanie przycisku w formularzu */
 }
 
 button:hover {
   background-color: #218838;
+}
+
+.loginH2 {
+  text-align: center;
 }

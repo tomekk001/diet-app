@@ -23,9 +23,6 @@
   border: none;
   border-radius: 5px;
   transition: background-color 0.3s;
-  width: 100%; /* Upewnia się, że przyciski są jednakowej szerokości */
-  height: 60px; /* Ustalona wysokość przycisków dla spójnego wyglądu */
-  box-sizing: border-box; /* Upewnia się, że padding jest wliczany w szerokość i wysokość */
 }
 
 .calendar-grid button:hover {
@@ -54,8 +51,4 @@
 
 .meal-item p {
   margin: 5px 0;
-}
-
-h2 {
-  text-align: center;
 }

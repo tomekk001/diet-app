@@ -1,6 +1,6 @@
 #dieta {
   margin-top: 20px;
-  text-align: left; /* Ustawienie domyślnego wyrównania tekstu */
+  text-align: left;
   font-family: Arial, sans-serif;
   margin: 20px auto;
   padding: 50px;
@@ -12,12 +12,12 @@
 }
 
 .macro-summary {
-  text-align: center; /* Wyrównanie tekstu w podsumowaniu makroskładników do środka */
-  margin-bottom: 20px; /* Dodano odstęp poniżej podsumowania */
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .macro-summary p {
-  margin: 5px 0; /* Dodano odstępy między wierszami */
+  margin: 5px 0;
 }
 
 .meal-item {
@@ -38,27 +38,27 @@
 
 .meal-name {
   font-size: medium;
-  color: #34495e; /* Zmiana koloru */
+  color: #34495e;
 }
 
 .meal-details,
 .meal-ingredients {
   font-size: 1em;
   margin: 5px 0;
-  color: #555; /* Ustalenie koloru tekstu dla detali */
+  color: #555;
 }
 .calories-macros {
   font-style: oblique;
 }
 
 .macro-summary {
-  text-align: center; /* Wyrównanie tekstu do środka */
-  margin-bottom: 20px; /* Odstęp poniżej podsumowania */
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .macro-summary p {
-  margin: 5px 0; /* Odstępy między wierszami */
-  font-weight: bold; /* Wyróżnienie tekstu */
+  margin: 5px 0;
+  font-weight: bold;
 }
 
 footer {
@@ -69,8 +69,8 @@ footer {
 }
 
 .fixed-back-button {
-  position: fixed; /* Ustawia pozycję przycisku na stałą */
-  top: 20px; /* Odstęp od górnej krawędzi */
-  left: 20px; /* Odstęp od lewej krawędzi */
-  z-index: 1000; /* Zapewnia, że przycisk będzie na wierzchu */
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
 }

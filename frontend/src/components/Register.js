@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/Register.css";
+import HomeBackButton from "./HomeBackButton";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -30,8 +31,8 @@ const Register = () => {
 
   return (
     <div>
-      <h2>Register</h2>
-      <form className="formFirst" onSubmit={handleSubmit}>
+      <HomeBackButton />
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={username}

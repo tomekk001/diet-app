@@ -1,5 +1,4 @@
-/* Stylizacje dla Login i Register */
-.formFirst {
+form {
   max-width: 400px;
   margin: 50px auto;
   background-color: #fff;
@@ -9,7 +8,7 @@
 }
 
 input {
-  width: 95%;
+  width: 100%;
   padding: 10px;
   margin: 10px 0;
   border-radius: 5px;
@@ -23,7 +22,6 @@ button {
   color: white;
   border-radius: 5px;
   border: none;
-  justify-content: center;
 }
 
 button:hover {

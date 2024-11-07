@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
+import HomeBackButton from "./HomeBackButton";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -31,29 +32,25 @@ const Login = () => {
 
   return (
     <div>
-      <h2>Login</h2>
-      <div className="container">
-        <form className="formFirst" onSubmit={handleSubmit}>
-          <input
-            className="loginInput"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-            required
-          />
-          <input
-            className="loginInput"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            required
-          />
-          <button type="submit">Login</button>
-        </form>
-        {message && <p>{message}</p>}
-      </div>
+      <HomeBackButton />
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          required
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          required
+        />
+        <button type="submit">Login</button>
+      </form>
+      {message && <p>{message}</p>}
     </div>
   );
 };

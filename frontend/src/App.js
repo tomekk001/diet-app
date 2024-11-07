@@ -24,7 +24,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
 
-        {/* Trasy chronione przez ProtectedRoute */}
+        {/*trasy chronione przez PR*/}
         <Route
           path="/dashboard"
           element={

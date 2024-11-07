@@ -1,9 +1,16 @@
-/* Dashboard.css */
-
 .dashboard-container {
+  display: flex;
+  flex-direction: column;
   text-align: center;
   padding: 20px;
   background-color: #f8f9fa;
+}
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 0 20px;
 }
 
 .dashboard-header {
@@ -17,27 +24,19 @@
 .dashboard-title {
   font-size: 36px;
   color: #333;
-  margin: 0;
-  flex: 1; /* Zapewnij, że tytuł zajmuje resztę dostępnej przestrzeni */
+  margin: 0 auto;
   text-align: center;
 }
 
 .logout-button {
-  padding: 10px 20px;
   font-size: 16px;
+  padding: 10px 20px;
   color: white;
-  background-color: #007bff;
-  width: 150px;
   border: none;
+  width: 150px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-  position: absolute;
-  right: 0; /* Ustawienie przycisku po prawej stronie */
-}
-
-.logout-button:hover {
-  background-color: #0056b3;
 }
 
 .dashboard-description {

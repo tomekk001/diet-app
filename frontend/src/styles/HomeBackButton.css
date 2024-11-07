@@ -1,19 +1,19 @@
 .back-button {
-  position: static;
-  top: 20px;
-  left: 20px;
+  position: static; /* Pozycja statyczna na ekranie */
+  top: 20px; /* Umieść przycisk 20px od góry */
+  left: 20px; /* Umieść przycisk 20px od lewej krawędzi */
   background-color: #0e0505;
   border: none;
-  width: 50px;
-  height: 50px;
+  width: 50px; /* Kwadratowy kształt */
+  height: 50px; /* Kwadratowy kształt */
   font-size: 24px;
   cursor: pointer;
-  border-radius: 50%;
+  border-radius: 50%; /* Zaokrąglone krawędzie */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* Wyśrodkuj strzałkę poziomo */
+  align-items: center; /* Wyśrodkuj strzałkę pionowo */
 }
 
 .back-button:hover {
@@ -24,9 +24,9 @@
   outline: none;
 }
 .back-button-calendar {
-  top: 20px;
-  left: 40px;
-  position: fixed;
+  top: 20px; /* Przykład: umieszczenie 50px od góry */
+  left: 40px; /* Przykład: umieszczenie 40px od lewej krawędzi */
+  position: fixed; /* Stała pozycja w widoku */
   background-color: #f0f0f0;
   border: none;
   width: 50px;
