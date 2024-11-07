@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/HomeBackButton.css"; // Importowanie pliku CSS
+import "../styles/HomeBackButton.css";
 
 const HomeBackButton = () => {
   const navigate = useNavigate();

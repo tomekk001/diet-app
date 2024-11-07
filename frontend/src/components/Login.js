@@ -19,10 +19,9 @@ const Login = () => {
         password,
       });
 
-      // Przechowywanie tokenu w localStorage
+      //przechywyanie tokenu w localStorage
       localStorage.setItem("token", response.data.token);
 
-      // Przekierowanie do Dashboard po zalogowaniu
       navigate("/dashboard");
     } catch (error) {
       console.error("Blad podczas logowania:", error);
