@@ -8,9 +8,7 @@ const CalculatorDiet = () => {
   const [results, setResults] = useState(null);
   const navigate = useNavigate();
 
-  const handleCalculate = (calculatedResults) => {
-    setResults(calculatedResults);
-  };
+  const handleCalculate = (calculatedResults) => setResults(calculatedResults);
 
   const getMealsData = async () => {
     const mealTypes = [
@@ -26,6 +24,7 @@ const CalculatorDiet = () => {
       )
     );
     const mealsDataArray = await Promise.all(requests);
+
     return mealTypes.reduce((acc, mealType, index) => {
       acc[mealType] = mealsDataArray[index];
       return acc;
@@ -33,17 +32,14 @@ const CalculatorDiet = () => {
   };
 
   const generateMonthlyDiet = async () => {
-    const daysOfMonth = Array.from({ length: 30 }, (_, i) => `Dzień ${i + 1}`);
     const mealsData = await getMealsData();
-    const usedMeals = new Set(); //zbior przechowujacy posilki uzyte w calym miesiacu
-
-    const monthlyDiet = daysOfMonth.map((day) =>
-      createDailyDiet(day, mealsData, results, usedMeals)
+    const usedMeals = new Set();
+    const monthlyDiet = Array.from({ length: 30 }, (_, i) =>
+      createDailyDiet(`Dzień ${i + 1}`, mealsData, results, usedMeals)
     );
 
     localStorage.setItem("dietPlan", JSON.stringify(monthlyDiet));
     localStorage.setItem("macros", JSON.stringify(results));
-
     navigate("/stored-diets");
   };
 
@@ -65,11 +61,10 @@ const CalculatorDiet = () => {
       dailyProtein = 0,
       dailyCarbs = 0,
       dailyFats = 0;
-
-    const usedMealsPerDay = new Set(); //posilki wykorzystane dla danego dnia
+    const usedMealsPerDay = new Set();
 
     mealTypes.forEach((mealType) => {
-      const mealCalories = Math.ceil(calculateMealCalories(calories, mealType));
+      const mealCalories = calculateMealCalories(calories, mealType);
       const selectedMeal = findOptimalMeal(
         mealsData[mealType],
         mealCalories,
@@ -82,11 +77,10 @@ const CalculatorDiet = () => {
 
       if (selectedMeal) {
         dailyMeals.push(selectedMeal);
-        dailyCalories += Math.ceil(selectedMeal.kaloryczność);
+        dailyCalories += selectedMeal.kaloryczność;
         dailyProtein += selectedMeal.białko;
         dailyCarbs += selectedMeal.węglowodany;
         dailyFats += selectedMeal.tłuszcze;
-
         usedMeals.add(selectedMeal._id);
         usedMealsPerDay.add(selectedMeal._id);
       }
@@ -103,40 +97,15 @@ const CalculatorDiet = () => {
   };
 
   const calculateMealCalories = (calories, mealType) => {
-    switch (mealType) {
-      case "sniadanie":
-        return calories * 0.25 + losujBlad();
-      case "iisniadanie":
-        return calories * 0.15 + losujBlad();
-      case "obiad":
-        return calories * 0.3 + losujBlad();
-      case "podwieczorek":
-        return calories * 0.1 + losujBlad();
-      case "kolacja":
-        return calories * 0.2 + losujBlad();
-      default:
-        return 0;
-    }
+    const proportions = {
+      sniadanie: 0.25,
+      iisniadanie: 0.15,
+      obiad: 0.3,
+      podwieczorek: 0.1,
+      kolacja: 0.2,
+    };
+    return Math.ceil(calories * (proportions[mealType] || 0) + randomError());
   };
-
-  function roundToNearestFive(number) {
-    return Math.round(number / 5) * 5;
-  }
-
-  function updateIngredients(ingredients, mnoznik) {
-    return ingredients
-      .split(", ")
-      .map((ingredient) => {
-        const match = ingredient.match(/(.+)\s(\d+)(g|ml)$/i);
-        if (match) {
-          const [_, name, amount, unit] = match;
-          const newAmount = roundToNearestFive(parseFloat(amount) * mnoznik);
-          return `${name} ${newAmount}${unit}`;
-        }
-        return ingredient;
-      })
-      .join(", ");
-  }
 
   const findOptimalMeal = (
     meals,
@@ -154,18 +123,18 @@ const CalculatorDiet = () => {
     shuffledMeals.forEach((meal) => {
       if (usedMeals.has(meal._id) || usedMealsPerDay.has(meal._id)) return;
 
-      const mnoznik = obliczMnoznik(meal.kaloryczność, targetCalories);
-      const tempProtein = meal.białko * mnoznik;
-      const tempCarbs = meal.węglowodany * mnoznik;
-      const tempFats = meal.tłuszcze * mnoznik;
+      const multiplier = calculateMultiplier(meal.kaloryczność, targetCalories);
+      const adjustedProtein = meal.białko * multiplier;
+      const adjustedCarbs = meal.węglowodany * multiplier;
+      const adjustedFats = meal.tłuszcze * multiplier;
 
       const difference = calculateTotalDifference(
         targetProtein,
         targetCarbs,
         targetFats,
-        tempProtein,
-        tempCarbs,
-        tempFats
+        adjustedProtein,
+        adjustedCarbs,
+        adjustedFats
       );
 
       if (difference < minDifference) {
@@ -173,10 +142,10 @@ const CalculatorDiet = () => {
         bestMeal = {
           ...meal,
           kaloryczność: Math.ceil(targetCalories),
-          białko: tempProtein,
-          węglowodany: tempCarbs,
-          tłuszcze: tempFats,
-          składniki: updateIngredients(meal.składniki, mnoznik),
+          białko: adjustedProtein,
+          węglowodany: adjustedCarbs,
+          tłuszcze: adjustedFats,
+          składniki: adjustIngredients(meal.składniki, multiplier),
         };
       }
     });
@@ -184,7 +153,6 @@ const CalculatorDiet = () => {
     return bestMeal;
   };
 
-  //funkcja oceny roznicy w makroskladnikach
   const calculateTotalDifference = (
     targetProtein,
     targetCarbs,
@@ -192,17 +160,30 @@ const CalculatorDiet = () => {
     actualProtein,
     actualCarbs,
     actualFats
-  ) => {
-    return (
-      Math.abs(targetProtein - actualProtein) * 2 +
-      Math.abs(targetCarbs - actualCarbs) +
-      Math.abs(targetFats - actualFats)
-    );
-  };
+  ) =>
+    Math.abs(targetProtein - actualProtein) * 2 +
+    Math.abs(targetCarbs - actualCarbs) * 1.3 +
+    Math.abs(targetFats - actualFats) * 2.3;
 
-  const losujBlad = () => Math.random() * 40 - 20;
-  const obliczMnoznik = (pierwotnaWartosc, nowaWartosc) =>
-    nowaWartosc / pierwotnaWartosc;
+  const randomError = () => Math.random() * 40 - 20;
+  const calculateMultiplier = (originalValue, targetValue) =>
+    targetValue / originalValue;
+
+  const adjustIngredients = (ingredients, multiplier) =>
+    ingredients
+      .split(", ")
+      .map((ingredient) => {
+        const match = ingredient.match(/(.+)\s(\d+)(g|ml)$/i);
+        if (match) {
+          const [_, name, amount, unit] = match;
+          const newAmount = roundToNearestFive(parseFloat(amount) * multiplier);
+          return `${name} ${newAmount}${unit}`;
+        }
+        return ingredient;
+      })
+      .join(", ");
+
+  const roundToNearestFive = (number) => Math.round(number / 5) * 5;
 
   return (
     <div className="containerCalculator">
@@ -215,12 +196,12 @@ const CalculatorDiet = () => {
         {results && (
           <section className="results">
             <h2>Wyniki</h2>
-            <p id="bmi-result">Twoje BMI: {results.bmi}</p>
-            <p id="calories-result">
+            <p>Twoje BMI: {results.bmi}</p>
+            <p>
               Dzienne zapotrzebowanie kaloryczne: {Math.ceil(results.calories)}{" "}
               kcal
             </p>
-            <p id="macronutrients">
+            <p>
               Makroskładniki: Białko - {results.protein} g, Węglowodany -{" "}
               {results.carbohydrates} g, Tłuszcze - {results.fats} g
             </p>

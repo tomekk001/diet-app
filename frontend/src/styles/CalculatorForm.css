@@ -7,27 +7,33 @@ body {
 }
 
 .containerCalculator {
-  max-width: 400px;
+  max-width: 100%;
   margin: 30px auto;
   background-color: #fff;
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-header h1 {
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
+#calculator-form {
+  display: flex;
+  flex-wrap: wrap; /* Ustawia przełamanie linii, jeśli elementy są zbyt szerokie */
+  gap: 20px; /* Odstępy między polami */
+  justify-content: space-between; /* Rozstawia elementy równomiernie */
+  max-width: 800px; /* Opcjonalne ograniczenie szerokości */
+  width: 100%;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  flex: 1; /* Elementy zajmują równą przestrzeń */
+  min-width: 180px; /* Minimalna szerokość pola */
 }
 
 .form-group label {
-  display: block;
+  display: block; /* Zachowuje pionowe ułożenie etykiety względem pola */
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 5px;
@@ -48,30 +54,30 @@ header h1 {
 .form-group select:focus {
   border-color: #66afe9;
   outline: none;
-  cursor: pointer;
 }
 
 button#calculate-btn {
-  width: 100%;
   background-color: #28a745;
   color: #fff;
   border: none;
-  padding: 12px;
+  padding: 12px 20px; /* Lekko poszerzony przycisk */
   font-size: 16px;
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  align-self: center; /* Wyśrodkowanie przycisku względem formularza */
 }
 
 button#calculate-btn:hover {
   background-color: #218838;
 }
-#btnDietCalc {
-  cursor: pointer;
-}
-button {
-  cursor: pointer;
+
+header h1 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 section.results {
