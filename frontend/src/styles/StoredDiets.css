@@ -1,76 +1,75 @@
 #dieta {
   margin-top: 20px;
-  text-align: left;
   font-family: Arial, sans-serif;
   margin: 20px auto;
   padding: 50px;
-  max-width: 500px;
+  max-width: 1200px; /* Zwiększona szerokość dla większej liczby kafelków */
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
 }
 
-.macro-summary {
-  text-align: center;
-  margin-bottom: 20px;
+.days-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Odstępy między dniami */
+  justify-content: center;
 }
 
-.macro-summary p {
-  margin: 5px 0;
-}
-
-.meal-item {
+.day-card {
+  flex: 1 1 calc(33.333% - 20px); /* Trzy dni w rzędzie, z marginesami */
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
-  margin-bottom: 15px;
   background-color: #f8f8f8;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.meals-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; /* Odstępy między posiłkami */
+  justify-content: space-around;
+}
+
+.meal-card {
+  flex: 1 1 calc(45% - 10px); /* Dwa posiłki w rzędzie wewnątrz dnia */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #fefefe;
   text-align: left;
-  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .meal-type {
-  font-size: 1.5em;
+  font-size: 1.2em;
   font-weight: bold;
   color: #2c3e50;
 }
 
 .meal-name {
-  font-size: medium;
+  font-size: 1em;
   color: #34495e;
+  margin-top: 5px;
 }
 
 .meal-details,
 .meal-ingredients {
-  font-size: 1em;
+  font-size: 0.9em;
   margin: 5px 0;
   color: #555;
 }
+
 .calories-macros {
-  font-style: oblique;
-}
-
-.macro-summary {
+  font-style: italic;
   text-align: center;
-  margin-bottom: 20px;
+  margin-top: 10px;
 }
 
-.macro-summary p {
-  margin: 5px 0;
-  font-weight: bold;
-}
-
-footer {
-  margin-top: 20px;
+.macrosName{
   text-align: center;
-  font-size: 0.8em;
-  color: #95a5a6;
 }
-
-.fixed-back-button {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
+p{
+  text-align: center;
 }
