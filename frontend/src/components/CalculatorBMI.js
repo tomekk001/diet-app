@@ -10,12 +10,12 @@ const CalculatorBMI = ({ onCalculate }) => {
     activity: "1.2",
     goal: "maintain",
   });
-  const [errors, setErrors] = useState({}); // Stan przechowujący błędy
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setErrors({ ...errors, [name]: "" }); // Usuwanie błędów przy zmianie
+    setErrors({ ...errors, [name]: "" });
   };
 
   const handleSubmit = (e) => {
@@ -26,7 +26,6 @@ const CalculatorBMI = ({ onCalculate }) => {
     const ageInt = parseInt(age);
     const activityFloat = parseFloat(activity);
 
-    // Walidacja danych wejściowych
     const newErrors = {};
     if (isNaN(weightFloat) || weightFloat <= 0) {
       newErrors.weight = "Waga musi być dodatnią liczbą.";
@@ -59,7 +58,20 @@ const CalculatorBMI = ({ onCalculate }) => {
     if (goal === "gain") dailyCalories += 500;
     else if (goal === "lose") dailyCalories -= 500;
 
-    const protein = weightFloat * 1.8;
+    // Zmodyfikowane wyliczanie białka na podstawie celu
+    let proteinMultiplier;
+    switch (goal) {
+      case "gain":
+        proteinMultiplier = 2.0; // Więcej białka dla przytycia
+        break;
+      case "lose":
+        proteinMultiplier = 1.5; // Mniej białka dla redukcji
+        break;
+      default:
+        proteinMultiplier = 1.8; // Standardowa wartość dla utrzymania
+    }
+    const protein = weightFloat * proteinMultiplier;
+
     const remainingCalories = dailyCalories - protein * 4;
     const carbohydrates = (remainingCalories * 0.55) / 4;
     const fats = (remainingCalories * 0.45) / 9;
