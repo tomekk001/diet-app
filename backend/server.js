@@ -16,7 +16,7 @@ app.use(
   })
 );
 
-const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017";
+const mongoURI = process.env.MONGO_URI_CLOUD || "mongodb://localhost:27017";
 const JWT_SECRET = process.env.JWT_SECRET;
 const port = process.env.PORT || 5000;
 
